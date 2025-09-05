@@ -36,9 +36,17 @@ def fetch_movie_from_omdb(title):
 
     imdb_id = data.get("imdbID")
 
+    year_str = data.get("Year", "0")
+    if "–" in year_str:  # Serienlaufzeiten
+        year_str = year_str.split("–")[0]
+    try:
+        year = int(year_str)
+    except ValueError:
+        year = 0
+
     return {
         "title": data["Title"],
-        "year": int(data["Year"]),
+        "year": year,
         "rating": float(data["imdbRating"]) if data["imdbRating"] != "N/A" else 0.0,
         "poster_url": f"{POSTER_URL}?apikey={API_KEY}&i={imdb_id}" if imdb_id else ""
     }
