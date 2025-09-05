@@ -6,8 +6,8 @@ API_KEY = "a8e97f74"
 BASE_URL = "http://www.omdbapi.com/"
 POSTER_URL = "http://img.omdbapi.com/"
 
-
-DB_URL = "sqlite:///movies.db"
+DB_PATH = os.path.join("data", "movies.db")
+DB_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(DB_URL)
 
@@ -78,9 +78,9 @@ def add_movie(title):
                 """),
                 movie_data
             )
-        print(f"✅ '{movie_data['title']}' hinzugefügt.")
+
     except Exception as e:
-        print("❌ Fehler beim Hinzufügen:", e)
+        print("A mistake happened try again.", e)
 
 
 def delete_movie(title):
@@ -104,7 +104,7 @@ def update_movie(title, rating):
             text("UPDATE movies SET rating = :rating WHERE title = :title"),
             {"title": title, "rating": rating}
         )
-    print(f"Movie '{title}' updated successfully.")
+
 
 
 def get_movie(title):

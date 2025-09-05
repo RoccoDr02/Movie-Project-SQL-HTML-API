@@ -1,5 +1,6 @@
 import random
-import movie_storage_sql as storage
+from storage import movie_storage_sql as storage
+
 
 def list_movies():
     """ lists all movies with total rating, year and poster """
@@ -8,6 +9,7 @@ def list_movies():
         print("No movies in your database.")
     else:
         print(f"{len(movies)} movies in total")
+        print()
         for title, info in movies.items():
             print(f"{title} (Rating: {info['rating']}, Year: {info['year']}, Poster: {info['poster_url']})")
 
@@ -17,7 +19,7 @@ def add_movie():
     title = input("Which movie you want to add?: ").strip()
     try:
         storage.add_movie(title)
-        print(f"Movie '{title}' added successfully from OMDb API.")
+        print(f"Movie added successfully from OMDb API.")
     except Exception as e:
         print("Error:", e)
 
@@ -28,7 +30,7 @@ def delete_movie():
     movies = storage.list_movies()
     if title in movies:
         storage.delete_movie(title)
-        print(f"Movie '{title}' got deleted.")
+
     else:
         print("Movie isn't in database.")
 
